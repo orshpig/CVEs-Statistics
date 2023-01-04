@@ -17,5 +17,3 @@ def to_graph():
     for i in range(len(dates)):
         ax.text(dates[i], total[i], total[i], size=12)
     plt.show()
-
-to_graph()
