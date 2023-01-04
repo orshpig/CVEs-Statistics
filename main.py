@@ -7,6 +7,7 @@ from datetime import date, datetime
 def request():
     total = []
     index = 1
+    print('Work in progress, it might take some time...')
     for date in date_list:
         if index < len(date_list):
             next_date = date_list[index]
@@ -17,6 +18,7 @@ def request():
             index += 1
         else:
             continue
+
 # Check if the user input is a yearly range, if yes it summarize the CVEs number per year.
     if user_input == '1':
         int_total = [eval(i) for i in total]
@@ -37,6 +39,7 @@ def request():
         new_total[0:0] = ['total']
         year_list[0:0] = ['date']
         data = zip(year_list, new_total)
+
  # Create a YEARLY CSV based on the data provided by the user input and its API response.
         with open('cve.csv', 'w') as my_file:
             for (year_list, new_total) in data:
@@ -44,16 +47,28 @@ def request():
 # Using the function that creates the YEARLY graph from the CSV file.
         plots.to_graph()
 
-
-    else:
+# Check if the user input is a monthly range
+    elif user_input == '2':
         total[0:0] = ['total']
-        date_list[0:0] = ['date']
-        data = zip(date_list, total)
-# Create a daily/monthly CSV based on the data provided by the user input and its API response.
+        dates_to_graph[0:0] = ['date']
+        data = zip(dates_to_graph, total)
+        # Create a monthly CSV based on the data provided by the user input and its API response.
         with open('cve.csv', 'w') as my_file:
             for (dates, total) in data:
                 my_file.write("{0},{1}\n".format(dates, total))
-# Using the function that creates a daily/monthly graph from the CSV file.
+        # Using the function that creates a monthly graph from the CSV file.
+        plots.to_graph()
+
+# Check if the user input is a daily range
+    elif user_input == '3':
+        total[0:0] = ['total']
+        date_list[0:0] = ['date']
+        data = zip(date_list, total)
+# Create a daily CSV based on the data provided by the user input and its API response.
+        with open('cve.csv', 'w') as my_file:
+            for (dates, total) in data:
+                my_file.write("{0},{1}\n".format(dates, total))
+# Using the function that creates a daily graph from the CSV file.
         plots.to_graph()
 
 
@@ -94,6 +109,7 @@ elif user_input == '2':
     if (start < max_date >= end) and (start >= min_date <= end):
 # Splits the range to months and using the request function.
         date_list = [i.strftime("%Y-%m-%d") for i in pd.date_range(start=start, end=end, freq='MS')]
+        dates_to_graph = [i.strftime("%Y-%m") for i in pd.date_range(start=start, end=end, freq='MS')]
         request()
     else:
         print(f'Years must be after 2015 and ends before {max_date}')
