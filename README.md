@@ -13,6 +13,3 @@ A tool that allows you to compare the amount of published CVEs between the dates
 Daily graphs are limited up to including 120 days.
 
 The oldest date that can be used is 01.01.2015
-
-### Temporary Limitation:
-At this point the yearly graph is not working correctly - it will be fixed soon.
